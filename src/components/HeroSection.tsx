@@ -2,6 +2,25 @@ import { motion } from "framer-motion";
 import { Star, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Points along the trajectory curve for placing nodes and aligning dots
+const getPointOnCurve = (t: number) => {
+  // Quadratic bezier: P0(50,350) Q1(250,350) Q2(400,250) then Q2(400,250) Q3(550,150) Q4(750,50)
+  // Simplified as a single cubic-ish interpolation
+  const x = 50 + t * 700;
+  const y = 350 - t * t * 100 - t * 200;
+  return { x, y };
+};
+
+const curvePoints = [0.15, 0.35, 0.55, 0.75, 0.9].map(getPointOnCurve);
+
+const scatteredDots = [
+  { startX: 80, startY: 280, t: 0.1 },
+  { startX: 30, startY: 320, t: 0.2 },
+  { startX: 120, startY: 370, t: 0.15 },
+  { startX: 60, startY: 240, t: 0.25 },
+  { startX: 150, startY: 310, t: 0.3 },
+];
+
 const TrajectoryArrow = () => (
   <svg
     viewBox="0 0 800 400"
@@ -10,52 +29,137 @@ const TrajectoryArrow = () => (
   >
     <defs>
       <linearGradient id="arrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="hsl(187 100% 50% / 0)" />
-        <stop offset="30%" stopColor="hsl(187 100% 50% / 0.6)" />
+        <stop offset="0%" stopColor="hsl(187 100% 50% / 0.1)" />
+        <stop offset="20%" stopColor="hsl(187 100% 50% / 0.7)" />
         <stop offset="100%" stopColor="hsl(187 100% 50% / 1)" />
       </linearGradient>
       <filter id="glow">
-        <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+        <feGaussianBlur stdDeviation="10" result="coloredBlur" />
         <feMerge>
           <feMergeNode in="coloredBlur" />
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
+      <filter id="glowStrong">
+        <feGaussianBlur stdDeviation="14" result="coloredBlur" />
+        <feMerge>
+          <feMergeNode in="coloredBlur" />
+          <feMergeNode in="coloredBlur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="hsl(187 100% 70%)" />
+        <stop offset="60%" stopColor="hsl(187 100% 50%)" />
+        <stop offset="100%" stopColor="hsl(187 100% 50% / 0)" />
+      </radialGradient>
     </defs>
 
-    {/* Glow layer */}
+    {/* Grid lines */}
+    <motion.g
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.06 }}
+      transition={{ duration: 0.4 }}
+    >
+      {[100, 200, 300].map((y) => (
+        <line key={`h${y}`} x1="0" y1={y} x2="800" y2={y} stroke="hsl(187 100% 50%)" strokeWidth="0.5" />
+      ))}
+      {[200, 400, 600].map((x) => (
+        <line key={`v${x}`} x1={x} y1="0" x2={x} y2="400" stroke="hsl(187 100% 50%)" strokeWidth="0.5" />
+      ))}
+    </motion.g>
+
+    {/* Scattered dots that align to path */}
+    {scatteredDots.map((dot, i) => {
+      const target = getPointOnCurve(dot.t);
+      return (
+        <motion.circle
+          key={`scatter-${i}`}
+          r="3"
+          fill="hsl(187 100% 50%)"
+          filter="url(#glow)"
+          initial={{ cx: dot.startX, cy: dot.startY, opacity: 0 }}
+          animate={{
+            cx: [dot.startX, target.x],
+            cy: [dot.startY, target.y],
+            opacity: [0, 0.8, 0.4],
+          }}
+          transition={{
+            duration: 0.6,
+            delay: 0.2 + i * 0.05,
+            ease: "easeInOut",
+            times: [0, 0.7, 1],
+          }}
+        />
+      );
+    })}
+
+    {/* Wide glow trail */}
     <motion.path
       d="M 50 350 Q 250 350 400 250 Q 550 150 750 50"
       fill="none"
-      stroke="hsl(187 100% 50% / 0.15)"
-      strokeWidth="40"
+      stroke="hsl(187 100% 50% / 0.2)"
+      strokeWidth="30"
       strokeLinecap="round"
       filter="url(#glow)"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+      transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
     />
 
-    {/* Main arc */}
+    {/* Main trajectory arc */}
     <motion.path
       d="M 50 350 Q 250 350 400 250 Q 550 150 750 50"
       fill="none"
       stroke="url(#arrowGrad)"
-      strokeWidth="4"
+      strokeWidth="6"
       strokeLinecap="round"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+      transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
     />
 
-    {/* Arrowhead */}
-    <motion.polygon
-      points="740,55 755,45 745,68"
-      fill="hsl(187 100% 50%)"
-      filter="url(#glow)"
+    {/* Data nodes along path */}
+    {curvePoints.map((pt, i) => (
+      <motion.circle
+        key={`node-${i}`}
+        cx={pt.x}
+        cy={pt.y}
+        r="5"
+        fill="hsl(187 100% 50%)"
+        filter="url(#glow)"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: [0, 1, 0.7], scale: [0, 1.2, 1] }}
+        transition={{
+          duration: 0.4,
+          delay: 1.2 + i * 0.1,
+          ease: "easeOut",
+        }}
+      />
+    ))}
+
+    {/* Destination orb */}
+    <motion.circle
+      cx="750"
+      cy="50"
+      r="12"
+      fill="url(#orbGrad)"
+      filter="url(#glowStrong)"
       initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 1.5 }}
+      animate={{
+        opacity: 1,
+        scale: [0, 1.1, 1, 1.3, 1],
+      }}
+      transition={{
+        opacity: { duration: 0.3, delay: 1.5 },
+        scale: {
+          duration: 2.5,
+          delay: 1.5,
+          repeat: Infinity,
+          repeatType: "loop",
+          times: [0, 0.12, 0.2, 0.6, 1],
+        },
+      }}
     />
   </svg>
 );
