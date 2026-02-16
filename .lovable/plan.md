@@ -1,55 +1,51 @@
 
 
-# HireVector — Homepage
+# Enhanced Hero Animation — Career Trajectory
 
-## Design System
-- **Syne** (Google Font) for hero headings and section titles — bold, unconventional, techy
-- **Inter** for body text, navigation, and smaller UI elements
-- **Colors**: Deep Navy (#0A1F44), Bright Cyan (#00D9FF) for CTAs/accents, Electric Green (#00FF88) for highlights
-- **Animation style**: Bold but fast — big dramatic entrances that resolve quickly
+## The Problem
+The current trajectory arrow is nearly invisible — it blends into the dark background with just a thin line and faint glow. It doesn't communicate the platform's core message of career direction and upward momentum.
 
-## Hero Section
-- Full-width navy gradient background
-- Large Syne headline: **"Direction matters. Get hired faster."**
-- Subheadline in Inter about 70+ vector alignment
-- **Animated curved trajectory arrow**: A glowing cyan arc that sweeps upward-right across the hero, like a career trajectory — animated on page load with a trail/glow effect
-- Two CTAs: "Calculate My Career Vector" (cyan, filled) + "Watch 2-Min Demo" (outline)
-- Social proof stars + "2,000+ professionals" below CTAs
-- Elements stagger in with bold slide-up animations
+## The Solution
+Replace the current subtle SVG arrow with a rich, multi-layered animated composition that tells the story: "Your career goes from scattered to directed, from stuck to soaring."
 
-## Navigation Bar
-- Sticky top nav with logo (arrow icon + "HireVector" wordmark)
-- Links: How It Works, Features, Pricing, About
-- "Get Started" CTA button
-- Mobile hamburger menu
+### Animation Concept: "Career Launchpad"
+A dramatic animated scene showing a career trajectory launching upward with supporting visual elements:
 
-## Social Proof Stats Bar
-- 4 stat cards: 15% Interview Rate, 70+ Vector Score, 5,000+ Hired, 3.2x Faster
-- Navy gradient cards with Electric Green numbers
-- Cards animate in with a fast scale-up effect on scroll
+1. **Animated trajectory path** — A thick, bright cyan arc that draws itself from bottom-left to upper-right with a prominent glowing trail. Much bolder stroke width (6-8px vs current 4px) and stronger glow.
 
-## Problem vs. Solution Section
-- "The Traditional Job Search is Broken" heading in Syne
-- Side-by-side comparison: ❌ Traditional vs ✅ HireVector
-- Rows slide in on scroll entry
+2. **Pulsing data nodes along the path** — Small glowing dots that appear at intervals along the trajectory, representing career data points (skills, experience, goals being mapped). These pulse in sequence after the path draws.
 
-## How It Works — 4-Step Grid
-- Vector Analysis → Precision Targeting → Smart Applications → Trajectory Tracking
-- Each card with icon, description, and key metric
-- Cards stagger in on scroll
+3. **Floating grid/coordinate lines** — Faint grid lines in the background that fade in, giving a "data visualization" feel — reinforcing that this is a precision system, not guesswork.
 
-## Testimonials
-- Two testimonial cards with cyan left-border accent
-- Quotes, names, roles, career transition details
-- Fade-in on scroll
+4. **A glowing orb at the arrowhead** — Instead of a static triangle arrowhead, a bright pulsing orb that lands at the top-right, representing "your destination" — with a gentle continuous pulse animation.
 
-## Bottom CTA Section
-- Navy gradient background
-- "Ready to optimize your career trajectory?" in Syne
-- Primary CTA + trust badges (no credit card, 7-day trial, cancel anytime)
+5. **Scattered-to-aligned dots** — A few small dots on the left side that start scattered/random, then animate to align along the trajectory path — visually showing "alignment."
 
-## Footer
-- 4-column layout: Brand, Product, Resources, Company
-- Copyright bar
+### Animation Timing (Bold but Fast)
+- 0s: Grid lines fade in softly (0.4s)
+- 0.2s: Scattered dots appear
+- 0.5s: Trajectory arc draws itself (1s duration)
+- 0.7s: Scattered dots animate to align on the path (0.6s)
+- 1.2s: Data nodes pulse in sequence along the path (0.5s staggered)
+- 1.5s: Glowing orb appears at the tip with a scale-in + continuous pulse
 
-All CTAs are visual only (no functionality). Fully responsive with mobile layout.
+Total animation completes in ~2 seconds — dramatic but resolves quickly.
+
+## Technical Details
+
+### File: `src/components/HeroSection.tsx`
+- Rewrite the `TrajectoryArrow` component with a richer SVG composition
+- Add multiple animated layers: grid, path, nodes, scattered dots, orb
+- Use framer-motion for all animations with coordinated delays
+- Increase overall opacity and brightness so the animation is clearly visible
+- Keep the SVG positioned as an absolute overlay on the right side of the hero
+
+### Visual Specs
+- Trajectory stroke: 6px width, bright cyan with strong gradient
+- Glow filter: stronger blur (stdDeviation 10-12) and higher opacity
+- Data nodes: 6-8px radius circles with cyan fill and glow
+- Grid lines: very subtle (opacity 0.05-0.08) to add depth without distraction
+- Orb: 12px radius with pulsing scale animation (1 to 1.3, infinite loop)
+
+No other files need to change — this is entirely within the HeroSection component.
+
