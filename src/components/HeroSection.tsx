@@ -103,7 +103,7 @@ const HeroSection = () => {
             </Button>
             <Button
               variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full px-8 h-12 text-base"
+              className="border-cyan/60 text-cyan hover:bg-cyan/15 hover:border-cyan rounded-full px-8 h-12 text-base"
             >
               <Play className="w-4 h-4 mr-2" />
               Watch 2-Min Demo
