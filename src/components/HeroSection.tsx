@@ -4,28 +4,26 @@ import { Button } from "@/components/ui/button";
 
 // Points along the trajectory curve for placing nodes and aligning dots
 const getPointOnCurve = (t: number) => {
-  // Quadratic bezier: P0(50,350) Q1(250,350) Q2(400,250) then Q2(400,250) Q3(550,150) Q4(750,50)
-  // Simplified as a single cubic-ish interpolation
-  const x = 50 + t * 700;
-  const y = 350 - t * t * 100 - t * 200;
+  const x = 80 + t * 640;
+  const y = 340 - t * t * 80 - t * 200;
   return { x, y };
 };
 
 const curvePoints = [0.15, 0.35, 0.55, 0.75, 0.9].map(getPointOnCurve);
 
 const scatteredDots = [
-  { startX: 80, startY: 280, t: 0.1 },
-  { startX: 30, startY: 320, t: 0.2 },
-  { startX: 120, startY: 370, t: 0.15 },
-  { startX: 60, startY: 240, t: 0.25 },
-  { startX: 150, startY: 310, t: 0.3 },
+  { startX: 100, startY: 280, t: 0.1 },
+  { startX: 60, startY: 310, t: 0.2 },
+  { startX: 140, startY: 350, t: 0.15 },
+  { startX: 80, startY: 240, t: 0.25 },
+  { startX: 160, startY: 300, t: 0.3 },
 ];
 
 const TrajectoryArrow = () => (
   <svg
     viewBox="0 0 800 400"
     className="absolute inset-0 w-full h-full pointer-events-none"
-    preserveAspectRatio="xMidYMid slice"
+    preserveAspectRatio="xMidYMid meet"
   >
     <defs>
       <linearGradient id="arrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -96,7 +94,7 @@ const TrajectoryArrow = () => (
 
     {/* Wide glow trail */}
     <motion.path
-      d="M 50 350 Q 250 350 400 250 Q 550 150 750 50"
+      d="M 80 340 Q 260 340 400 240 Q 540 140 720 60"
       fill="none"
       stroke="hsl(187 100% 50% / 0.2)"
       strokeWidth="30"
@@ -109,7 +107,7 @@ const TrajectoryArrow = () => (
 
     {/* Main trajectory arc */}
     <motion.path
-      d="M 50 350 Q 250 350 400 250 Q 550 150 750 50"
+      d="M 80 340 Q 260 340 400 240 Q 540 140 720 60"
       fill="none"
       stroke="url(#arrowGrad)"
       strokeWidth="6"
@@ -140,8 +138,8 @@ const TrajectoryArrow = () => (
 
     {/* Destination orb */}
     <motion.circle
-      cx="750"
-      cy="50"
+      cx="720"
+      cy="60"
       r="12"
       fill="url(#orbGrad)"
       filter="url(#glowStrong)"
