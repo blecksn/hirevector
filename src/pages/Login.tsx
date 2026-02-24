@@ -83,6 +83,24 @@ const Login = () => {
             </form>
           </Form>
 
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-cyan/10" /></div>
+            <div className="relative flex justify-center text-xs"><span className="bg-navy/60 px-2 text-primary-foreground/40 font-body">or</span></div>
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full border-cyan/20 text-cyan hover:bg-cyan/10 rounded-full h-11"
+            onClick={() => {
+              form.setValue("email", "demo@hirevector.com");
+              form.setValue("password", "demo1234");
+              toast({ title: "Demo credentials filled!", description: "Click Log In to continue." });
+            }}
+          >
+            Try Demo Account
+          </Button>
+
           <p className="text-primary-foreground/50 text-sm text-center mt-6 font-body">
             Don't have an account?{" "}
             <Link to="/signup" className="text-cyan hover:underline font-medium">Sign up</Link>
