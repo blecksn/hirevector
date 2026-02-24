@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Star, Play } from "lucide-react";
+import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import DemoModal from "@/components/DemoModal";
 
 const getPointOnCurve = (t: number) => {
   const x = 60 + t * 380;
@@ -53,12 +55,7 @@ const TrajectoryAnimation = () => (
         </radialGradient>
       </defs>
 
-      {/* Grid lines */}
-      <motion.g
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.08 }}
-        transition={{ duration: 0.4 }}
-      >
+      <motion.g initial={{ opacity: 0 }} animate={{ opacity: 0.08 }} transition={{ duration: 0.4 }}>
         {[100, 200, 300].map((y) => (
           <line key={`h${y}`} x1="0" y1={y} x2="500" y2={y} stroke="hsl(187 100% 50%)" strokeWidth="0.5" />
         ))}
@@ -67,7 +64,6 @@ const TrajectoryAnimation = () => (
         ))}
       </motion.g>
 
-      {/* Scattered dots that align to path */}
       {scatteredDots.map((dot, i) => {
         const target = getPointOnCurve(dot.t);
         return (
@@ -77,88 +73,20 @@ const TrajectoryAnimation = () => (
             fill="hsl(187 100% 50%)"
             filter="url(#glow)"
             initial={{ cx: dot.startX, cy: dot.startY, opacity: 0 }}
-            animate={{
-              cx: [dot.startX, target.x],
-              cy: [dot.startY, target.y],
-              opacity: [0, 0.8, 0.4],
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.2 + i * 0.05,
-              ease: "easeInOut",
-              times: [0, 0.7, 1],
-            }}
+            animate={{ cx: [dot.startX, target.x], cy: [dot.startY, target.y], opacity: [0, 0.8, 0.4] }}
+            transition={{ duration: 0.6, delay: 0.2 + i * 0.05, ease: "easeInOut", times: [0, 0.7, 1] }}
           />
         );
       })}
 
-      {/* Wide glow trail */}
-      <motion.path
-        d="M 60 340 Q 180 340 250 240 Q 320 140 440 60"
-        fill="none"
-        stroke="hsl(187 100% 50% / 0.2)"
-        strokeWidth="30"
-        strokeLinecap="round"
-        filter="url(#glow)"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-      />
+      <motion.path d="M 60 340 Q 180 340 250 240 Q 320 140 440 60" fill="none" stroke="hsl(187 100% 50% / 0.2)" strokeWidth="30" strokeLinecap="round" filter="url(#glow)" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, ease: "easeOut", delay: 0.5 }} />
+      <motion.path d="M 60 340 Q 180 340 250 240 Q 320 140 440 60" fill="none" stroke="url(#arrowGrad)" strokeWidth="6" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, ease: "easeOut", delay: 0.5 }} />
 
-      {/* Main trajectory arc */}
-      <motion.path
-        d="M 60 340 Q 180 340 250 240 Q 320 140 440 60"
-        fill="none"
-        stroke="url(#arrowGrad)"
-        strokeWidth="6"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-      />
-
-      {/* Data nodes along path */}
       {curvePoints.map((pt, i) => (
-        <motion.circle
-          key={`node-${i}`}
-          cx={pt.x}
-          cy={pt.y}
-          r="5"
-          fill="hsl(187 100% 50%)"
-          filter="url(#glow)"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: [0, 1, 0.7], scale: [0, 1.2, 1] }}
-          transition={{
-            duration: 0.4,
-            delay: 1.2 + i * 0.1,
-            ease: "easeOut",
-          }}
-        />
+        <motion.circle key={`node-${i}`} cx={pt.x} cy={pt.y} r="5" fill="hsl(187 100% 50%)" filter="url(#glow)" initial={{ opacity: 0, scale: 0 }} animate={{ opacity: [0, 1, 0.7], scale: [0, 1.2, 1] }} transition={{ duration: 0.4, delay: 1.2 + i * 0.1, ease: "easeOut" }} />
       ))}
 
-      {/* Destination orb */}
-      <motion.circle
-        cx="440"
-        cy="60"
-        r="12"
-        fill="url(#orbGrad)"
-        filter="url(#glowStrong)"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: 1,
-          scale: [0, 1.1, 1, 1.3, 1],
-        }}
-        transition={{
-          opacity: { duration: 0.3, delay: 1.5 },
-          scale: {
-            duration: 2.5,
-            delay: 1.5,
-            repeat: Infinity,
-            repeatType: "loop",
-            times: [0, 0.12, 0.2, 0.6, 1],
-          },
-        }}
-      />
+      <motion.circle cx="440" cy="60" r="12" fill="url(#orbGrad)" filter="url(#glowStrong)" initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: [0, 1.1, 1, 1.3, 1] }} transition={{ opacity: { duration: 0.3, delay: 1.5 }, scale: { duration: 2.5, delay: 1.5, repeat: Infinity, repeatType: "loop", times: [0, 0.12, 0.2, 0.6, 1] } }} />
     </svg>
   </div>
 );
@@ -178,7 +106,6 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-navy-deep via-navy to-navy-deep pt-16">
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-          {/* Left: Text content */}
           <motion.div
             variants={container}
             initial="hidden"
@@ -201,16 +128,10 @@ const HeroSection = () => {
             </motion.p>
 
             <motion.div variants={slideUp} className="flex flex-wrap gap-4 mb-8">
-              <Button className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-8 h-12 text-base shadow-lg shadow-cyan/25">
-                Calculate My Career Vector
+              <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-8 h-12 text-base shadow-lg shadow-cyan/25">
+                <Link to="/signup">Calculate My Career Vector</Link>
               </Button>
-              <Button
-                variant="outline"
-                className="border-cyan/60 text-cyan hover:bg-cyan/15 hover:border-cyan rounded-full px-8 h-12 text-base"
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Watch 2-Min Demo
-              </Button>
+              <DemoModal />
             </motion.div>
 
             <motion.div
@@ -228,7 +149,6 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right: Animation */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

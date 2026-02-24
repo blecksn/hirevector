@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Shield, Clock, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const badges = [
   { icon: Shield, text: "No credit card required" },
@@ -40,8 +41,8 @@ const BottomCTA = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45, delay: 0.24 }}
         >
-          <Button className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-10 h-14 text-lg shadow-lg shadow-cyan/25 mb-8">
-            Start Your Free Trial
+          <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-10 h-14 text-lg shadow-lg shadow-cyan/25 mb-8">
+            <Link to="/signup">Start Your Free Trial</Link>
           </Button>
         </motion.div>
 

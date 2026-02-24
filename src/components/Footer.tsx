@@ -1,17 +1,33 @@
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const columns = [
   {
     title: "Product",
-    links: ["Vector Analysis", "Career Matching", "Smart Applications", "Pricing"],
+    links: [
+      { label: "Vector Analysis", to: "/#how-it-works" },
+      { label: "Career Matching", to: "/#how-it-works" },
+      { label: "Smart Applications", to: "/#how-it-works" },
+      { label: "Pricing", to: "/pricing" },
+    ],
   },
   {
     title: "Resources",
-    links: ["Blog", "Career Guides", "API Docs", "Help Center"],
+    links: [
+      { label: "Blog", to: "/#features" },
+      { label: "Career Guides", to: "/#features" },
+      { label: "API Docs", to: "/contact" },
+      { label: "Help Center", to: "/contact" },
+    ],
   },
   {
     title: "Company",
-    links: ["About", "Careers", "Press", "Contact"],
+    links: [
+      { label: "About", to: "/about" },
+      { label: "Careers", to: "/about" },
+      { label: "Privacy", to: "/privacy" },
+      { label: "Terms", to: "/terms" },
+    ],
   },
 ];
 
@@ -20,14 +36,13 @@ const Footer = () => {
     <footer className="bg-navy-deep border-t border-cyan/10 py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-7 h-7 rounded-md bg-cyan flex items-center justify-center">
                 <ArrowUpRight className="w-4 h-4 text-cyan-foreground" />
               </div>
               <span className="font-display text-lg font-bold text-primary-foreground">HireVector</span>
-            </a>
+            </Link>
             <p className="text-primary-foreground/50 text-sm font-body leading-relaxed">
               Career vector alignment platform. Direction matters.
             </p>
@@ -38,13 +53,13 @@ const Footer = () => {
               <h4 className="font-display font-bold text-primary-foreground text-sm mb-4">{col.title}</h4>
               <ul className="space-y-2">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
                       className="text-primary-foreground/50 hover:text-cyan text-sm font-body transition-colors"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -52,8 +67,13 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="border-t border-cyan/10 pt-6 text-center text-primary-foreground/40 text-xs font-body">
-          © {new Date().getFullYear()} HireVector. All rights reserved.
+        <div className="border-t border-cyan/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-primary-foreground/40 text-xs font-body">
+          <span>© {new Date().getFullYear()} HireVector. All rights reserved.</span>
+          <div className="flex gap-4">
+            <Link to="/privacy" className="hover:text-cyan transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-cyan transition-colors">Terms of Service</Link>
+            <Link to="/contact" className="hover:text-cyan transition-colors">Contact</Link>
+          </div>
         </div>
       </div>
     </footer>
