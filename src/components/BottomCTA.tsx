@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Shield, Clock, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useWaitlist } from "@/components/WaitlistContext";
 
 const badges = [
   { icon: Shield, text: "No credit card required" },
@@ -11,6 +11,7 @@ const badges = [
 ];
 
 const BottomCTA = () => {
+  const { openWaitlist } = useWaitlist();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -41,8 +42,8 @@ const BottomCTA = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45, delay: 0.24 }}
         >
-          <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-10 h-14 text-lg shadow-lg shadow-cyan/25 mb-8">
-            <Link to="/signup">Start Your Free Trial</Link>
+          <Button onClick={openWaitlist} className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-10 h-14 text-lg shadow-lg shadow-cyan/25 mb-8">
+            Start Your Free Trial
           </Button>
         </motion.div>
 

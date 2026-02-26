@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import { useWaitlist } from "@/components/WaitlistContext";
 
 const tiers = [
   {
@@ -55,6 +55,7 @@ const tiers = [
 ];
 
 const Pricing = () => {
+  const { openWaitlist } = useWaitlist();
   useEffect(() => {
     document.title = "Pricing — HireVector";
   }, []);
@@ -118,16 +119,14 @@ const Pricing = () => {
                   ))}
                 </ul>
                 <Button
-                  asChild
+                  onClick={openWaitlist}
                   className={`w-full rounded-full font-bold ${
                     tier.highlighted
                       ? "bg-cyan text-cyan-foreground hover:bg-cyan/90 shadow-lg shadow-cyan/25"
                       : "bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/20"
                   }`}
                 >
-                  <Link to={tier.name === "Enterprise" ? "/contact" : "/signup"}>
-                    {tier.cta}
-                  </Link>
+                  {tier.cta}
                 </Button>
               </motion.div>
             ))}
