@@ -45,8 +45,8 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center mb-4 overflow-hidden h-16">
-              <img src={logo} alt="HireVector" className="h-48 w-auto object-contain -my-16" />
+            <Link to="/" className="flex items-center mb-4 overflow-hidden h-12">
+              <img src={logo} alt="HireVector" className="h-36 w-auto object-contain -my-12" />
             </Link>
             <p className="text-primary-foreground/50 text-sm font-body leading-relaxed">
               Career vector alignment platform. Direction matters.
