@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Linkedin, Instagram, Twitter, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -31,11 +31,18 @@ const columns = [
   },
 ];
 
+const socials = [
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/hire-vector" },
+  { icon: Instagram, label: "Instagram", href: "https://instagram.com/hirevector.ai" },
+  { icon: Twitter, label: "X", href: "https://x.com/hirevector" },
+  { icon: Github, label: "GitHub", href: "https://github.com/hirevector" },
+];
+
 const Footer = () => {
   return (
     <footer className="bg-navy-deep border-t border-cyan/10 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-7 h-7 rounded-md bg-cyan flex items-center justify-center">
@@ -65,6 +72,25 @@ const Footer = () => {
               </ul>
             </div>
           ))}
+
+          <div>
+            <h4 className="font-display font-bold text-primary-foreground text-sm mb-4">Connect</h4>
+            <ul className="space-y-2">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary-foreground/50 hover:text-cyan text-sm font-body transition-colors"
+                  >
+                    <s.icon className="w-4 h-4" />
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-cyan/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-primary-foreground/40 text-xs font-body">

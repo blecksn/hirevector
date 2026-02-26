@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useWaitlist } from "@/components/WaitlistContext";
 
 const navLinks = [
   { label: "How It Works", href: "/#how-it-works" },
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { openWaitlist } = useWaitlist();
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
@@ -53,8 +55,8 @@ const Navbar = () => {
               {link.label}
             </button>
           ))}
-          <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-semibold rounded-full px-6">
-            <Link to="/signup">Get Started</Link>
+          <Button onClick={openWaitlist} className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-semibold rounded-full px-6">
+            Get Started
           </Button>
         </div>
 
@@ -86,8 +88,8 @@ const Navbar = () => {
                   {link.label}
                 </button>
               ))}
-              <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-semibold rounded-full w-full mt-2">
-                <Link to="/signup">Get Started</Link>
+              <Button onClick={() => { setMobileOpen(false); openWaitlist(); }} className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-semibold rounded-full w-full mt-2">
+                Get Started
               </Button>
             </div>
           </motion.div>

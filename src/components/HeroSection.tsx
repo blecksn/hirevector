@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import DemoModal from "@/components/DemoModal";
+import { useWaitlist } from "@/components/WaitlistContext";
 
 const getPointOnCurve = (t: number) => {
   const x = 60 + t * 380;
@@ -102,6 +102,7 @@ const slideUp = {
 };
 
 const HeroSection = () => {
+  const { openWaitlist } = useWaitlist();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-navy-deep via-navy to-navy-deep pt-16">
       <div className="container mx-auto px-4 relative z-10">
@@ -128,8 +129,8 @@ const HeroSection = () => {
             </motion.p>
 
             <motion.div variants={slideUp} className="flex flex-wrap gap-4 mb-8">
-              <Button asChild className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-8 h-12 text-base shadow-lg shadow-cyan/25">
-                <Link to="/signup">Calculate My Career Vector</Link>
+              <Button onClick={openWaitlist} className="bg-cyan text-cyan-foreground hover:bg-cyan/90 font-bold rounded-full px-8 h-12 text-base shadow-lg shadow-cyan/25">
+                Calculate My Career Vector
               </Button>
               <DemoModal />
             </motion.div>
