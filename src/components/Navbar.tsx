@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useWaitlist } from "@/components/WaitlistContext";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { label: "How It Works", href: "/#how-it-works" },
@@ -36,13 +37,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-navy-deep/90 backdrop-blur-md border-b border-cyan/10">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-cyan flex items-center justify-center">
-            <ArrowUpRight className="w-5 h-5 text-cyan-foreground" />
-          </div>
-          <span className="font-display text-xl font-bold text-primary-foreground tracking-tight">
-            HireVector
-          </span>
+        <Link to="/" className="flex items-center group">
+          <img src={logo} alt="HireVector" className="h-8 w-auto" />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">

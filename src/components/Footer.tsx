@@ -1,5 +1,6 @@
-import { ArrowUpRight, Linkedin, Instagram, Twitter, Github } from "lucide-react";
+import { Linkedin, Instagram, Twitter, Github } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
 const columns = [
   {
@@ -44,11 +45,8 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-md bg-cyan flex items-center justify-center">
-                <ArrowUpRight className="w-4 h-4 text-cyan-foreground" />
-              </div>
-              <span className="font-display text-lg font-bold text-primary-foreground">HireVector</span>
+            <Link to="/" className="flex items-center mb-4">
+              <img src={logo} alt="HireVector" className="h-7 w-auto" />
             </Link>
             <p className="text-primary-foreground/50 text-sm font-body leading-relaxed">
               Career vector alignment platform. Direction matters.
