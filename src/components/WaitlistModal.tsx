@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const waitlistSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -72,8 +73,8 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-navy border-cyan/20 sm:max-w-md">
         <DialogHeader className="text-center">
-          <div className="flex justify-center mb-2">
-            <Sparkles className="w-8 h-8 text-cyan" />
+          <div className="flex justify-center mb-2 overflow-hidden h-10">
+            <img src={logo} alt="HireVector" className="h-28 w-auto object-contain -my-8" />
           </div>
           <DialogTitle className="font-display text-2xl font-extrabold text-primary-foreground">
             Coming Soon
