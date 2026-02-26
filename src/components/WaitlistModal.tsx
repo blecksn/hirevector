@@ -44,7 +44,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          accessKey: "YOUR_STATICFORMS_ACCESS_KEY",
+          accessKey: "sf_9egnm9f3hdgd39blea20765j",
           name: result.data.name,
           email: result.data.email,
           message: `Role/Title: ${result.data.role || "Not specified"}`,
