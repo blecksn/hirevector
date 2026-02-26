@@ -37,8 +37,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-navy-deep/90 backdrop-blur-md border-b border-cyan/10">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center overflow-hidden h-20">
-          <img src={logo} alt="HireVector" className="h-56 w-auto object-contain -my-16" />
+        <Link to="/" className="flex items-center overflow-hidden h-[60px]">
+          <img src={logo} alt="HireVector" className="h-42 w-auto object-contain -my-12" />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
