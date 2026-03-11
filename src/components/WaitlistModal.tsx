@@ -73,8 +73,8 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-navy border-cyan/20 sm:max-w-md">
         <DialogHeader className="text-center">
-          <div className="flex justify-center mb-2 overflow-hidden h-10">
-            <img src={logo} alt="HireVector" className="h-28 w-auto object-contain -my-8" />
+          <div className="flex justify-center mb-2 overflow-hidden h-[3.75rem]">
+            <img src={logo} alt="HireVector" className="h-[10.5rem] w-auto object-contain -my-[3.375rem]" />
           </div>
           <DialogTitle className="font-display text-2xl font-extrabold text-primary-foreground">
             Coming Soon
